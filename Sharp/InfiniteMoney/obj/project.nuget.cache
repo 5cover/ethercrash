@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "fsHGfI94KkldSybCmxlDFR2ifXFnFaPpSwev0MXiNov9kQbsxbEBGKyL3jphk/Fr8WaWwSdiccd0rYKu4vH7zw==",
+  "success": true,
+  "projectFilePath": "/home/raphael/Documents/Programmation/Projets/Ethercrash/Sharp/InfiniteMoney/InfiniteMoney.csproj",
+  "expectedPackageFiles": [
+    "/home/raphael/.nuget/packages/microsoft.netcore.app.host.linux-x64/7.0.17/microsoft.netcore.app.host.linux-x64.7.0.17.nupkg.sha512"
+  ],
+  "logs": []
+}
