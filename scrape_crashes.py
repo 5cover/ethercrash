@@ -23,13 +23,13 @@ import requests
 # - Fetch other pages once in a while (site homepage...)
 # - Fetch games in a random order in fixed-size "chunks"
 
-CHANCE_COFFEE_BREAK = .004217  # 0.4217%
+CHANCE_COFFEE_BREAK = .003217  # 0.3217%
 CHANCE_DISTRATION_URL = .15554  # 15.554%
-CHANCE_HEADER_CHANGE = .04869  # 4.869%
+CHANCE_HEADER_CHANGE = .05869  # 5.869%
 MAX_RETRIES = 1000
 REQUEST_TIMEOUT = 30
-WAIT_MAX = 24
-WAIT_MIN = 5
+WAIT_MAX = 20
+WAIT_MIN = 3
 
 CRASH_PATTERN = 'Crashed @(\d+,?\d*\.\d\d)x'
 GAME_PLAYER_BET_PATTERN = '<td> ([,\d]+) Ethos'
@@ -111,6 +111,7 @@ def main():
                 log(f'on {timestamp}, {player_count} betted {bet_sum}, crashed at {crash}, ', end='')
 
                 pause(get_wait_time(WAIT_MIN, WAIT_MAX))
+                #pause(.5)
 
                 if test(CHANCE_COFFEE_BREAK):
                     log('COFFEE BREAK!', end=' ')
@@ -123,9 +124,15 @@ def main():
                     log('HEADER CHANGE!')
                     header = HEADER_GENERATOR()
         finally:
-            # if any error or Ctrl+C termination occurs, still write the results
-            log('Writing', len(results), 'rows...')
-            writer.writerows(sorted(results, key=lambda row: row[0], reverse=True))  # write rows sorted by id descending
+            results = sorted(results, key=lambda row: row[0], reverse=True)
+            # if any error or Ctrl+C termination occurs, write the incomplete results to console
+            if len(results) != args.chunk_size:
+                log('INCOMPLETE CHUNK OF SIZE', len(results))
+                for r in results:
+                    log(*r, sep=',')
+            else:
+                log('Writing', len(results), 'rows...')
+                writer.writerows(results)  # write rows sorted by id descending
 
 
 def scrape_url(url: str) -> str:
