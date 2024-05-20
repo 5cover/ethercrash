@@ -65,13 +65,13 @@ def main():
         # print(cashout)
         # return
 
-        fig, ax = plt.subplots()
-        scatter_by(ax, games, ptsize=3,
+        fig, axes = plt.subplots(2, 1)
+        plot_zero_line(axes[0])
+        plot_diff(axes[0], cashouts)
+        plot_gain(axes[0], cashouts)
+        scatter_by(axes[1], games, ptsize=3,
                    x=lambda g: g.bet_sum, xlabel='bet sum',
                    y=lambda g: g.crash / P, ylabel='crash', yscale='log')
-        # plot_zero_line(ax)
-        # plot_diff(ax, cashouts)
-        # plot_gain(ax, cashouts)
         plt.show()
 
 
